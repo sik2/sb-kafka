@@ -1,7 +1,7 @@
 package com.ll.sbkafka.domain.post.post.service;
 
 import com.ll.sbkafka.domain.member.member.entity.Member;
-import com.ll.sbkafka.domain.post.post.entity.Author;
+import com.ll.sbkafka.domain.post.author.entity.Author;
 import com.ll.sbkafka.domain.post.post.entity.Post;
 import com.ll.sbkafka.domain.post.post.repository.PostRepository;
 import com.ll.sbkafka.global.event.PostCreatedEvent;

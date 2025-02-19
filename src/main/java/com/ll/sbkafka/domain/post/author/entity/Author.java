@@ -1,4 +1,4 @@
-package com.ll.sbkafka.domain.post.post.entity;
+package com.ll.sbkafka.domain.post.author.entity;
 
 import com.ll.sbkafka.global.jpa.entity.BaseEntity;
 import jakarta.persistence.Column;
