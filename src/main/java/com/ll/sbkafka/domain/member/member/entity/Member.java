@@ -4,7 +4,6 @@ import com.ll.sbkafka.global.jpa.entity.BaseEntity;
 import jakarta.persistence.Entity;
 import lombok.*;
 
-import static lombok.AccessLevel.PRIVATE;
 import static lombok.AccessLevel.PROTECTED;
 
 @Entity
@@ -17,9 +16,4 @@ public class Member extends BaseEntity {
     private String username;
     private String password;
     private String nickname;
-    @Setter(PRIVATE)
-    private long postsCount;
-    public void increasePostsCount() {
-        postsCount++;
-    }
 }
