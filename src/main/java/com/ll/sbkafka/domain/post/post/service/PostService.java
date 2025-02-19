@@ -21,18 +21,25 @@ public class PostService {
     public RsData<Post> write(Author author, String title, String content) {
         author.increasePostsCount();
 
-        return RsData.of(
-                postRepository.save(
-                        Post.builder()
-                                .author(author)
-                                .title(title)
-                                .content(content)
-                                .build()
-                )
+        Post post = postRepository.save(
+                Post.builder()
+                        .author(author)
+                        .title(title)
+                        .content(content)
+                        .build()
         );
+
+        // 알림
+        firePostCreatedEvent(post);
+
+        return RsData.of(post);
     }
 
     public Author of(Member member) {
         return entityManager.getReference(Author.class, member.getId());
+    }
+
+    private void firePostCreatedEvent(Post post) {
+        System.out.println("게시글 생성 알림");
     }
 }
