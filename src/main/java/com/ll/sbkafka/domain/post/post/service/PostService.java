@@ -1,6 +1,7 @@
 package com.ll.sbkafka.domain.post.post.service;
 
 import com.ll.sbkafka.domain.member.member.entity.Member;
+import com.ll.sbkafka.domain.member.member.service.MemberService;
 import com.ll.sbkafka.domain.post.post.entity.Author;
 import com.ll.sbkafka.domain.post.post.entity.Post;
 import com.ll.sbkafka.domain.post.post.repository.PostRepository;
@@ -14,11 +15,13 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class PostService {
     private final PostRepository postRepository;
-
+    private final MemberService memberService;
     @PersistenceContext
     private EntityManager entityManager;
 
     public RsData<Post> write(Author author, String title, String content) {
+        memberService.increasePostsCount(author.getId());
+
         return RsData.of(
                 postRepository.save(
                         Post.builder()
