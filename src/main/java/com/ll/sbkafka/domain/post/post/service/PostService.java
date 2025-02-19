@@ -1,16 +1,15 @@
 package com.ll.sbkafka.domain.post.post.service;
 
 import com.ll.sbkafka.domain.member.member.entity.Member;
-import com.ll.sbkafka.domain.noti.noti.service.NotiService;
 import com.ll.sbkafka.domain.post.post.entity.Author;
 import com.ll.sbkafka.domain.post.post.entity.Post;
 import com.ll.sbkafka.domain.post.post.repository.PostRepository;
+import com.ll.sbkafka.global.event.PostCreatedEvent;
 import com.ll.sbkafka.global.rsData.RsData;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,12 +18,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class PostService {
     private final PostRepository postRepository;
-    @Autowired
-    @Lazy
-    private NotiService notiService;
 
     @PersistenceContext
     private EntityManager entityManager;
+    private final ApplicationEventPublisher eventPublisher;
 
     public RsData<Post> write(Author author, String title, String content) {
         author.increasePostsCount();
@@ -37,8 +34,7 @@ public class PostService {
                         .build()
         );
 
-        // 알림
-        firePostCreatedEvent(post);
+        eventPublisher.publishEvent(new PostCreatedEvent(this, post));
 
         return RsData.of(post);
     }
@@ -49,9 +45,5 @@ public class PostService {
 
     public Member of(Author author) {
         return entityManager.getReference(Member.class, author.getId());
-    }
-
-    private void firePostCreatedEvent(Post post) {
-        notiService.postCreated(post);
     }
 }
