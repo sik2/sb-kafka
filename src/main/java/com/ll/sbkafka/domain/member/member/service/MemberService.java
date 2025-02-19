@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class MemberService {
@@ -27,5 +29,9 @@ public class MemberService {
 
     public long count() {
         return memberRepository.count();
+    }
+
+    public List<Member> findAll() {
+        return memberRepository.findAll();
     }
 }
