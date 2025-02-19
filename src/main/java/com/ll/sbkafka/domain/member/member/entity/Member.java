@@ -4,9 +4,11 @@ import com.ll.sbkafka.global.jpa.entity.BaseEntity;
 import jakarta.persistence.Entity;
 import lombok.*;
 
+import static lombok.AccessLevel.PROTECTED;
+
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = PROTECTED)
+@AllArgsConstructor(access = PROTECTED)
 @Builder
 @Getter
 @Setter
