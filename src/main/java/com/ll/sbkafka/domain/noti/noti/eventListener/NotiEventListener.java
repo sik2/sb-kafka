@@ -1,6 +1,7 @@
 package com.ll.sbkafka.domain.noti.noti.eventListener;
 
 import com.ll.sbkafka.domain.noti.noti.service.NotiService;
+import com.ll.sbkafka.global.dto.chat.ChatMessageDto;
 import com.ll.sbkafka.global.event.PostCreatedEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
@@ -23,12 +24,12 @@ public class NotiEventListener {
     }
 
     @KafkaListener(topics="chat-room-1", groupId = "1")
-    public void consume(String message) {
+    public void consume(ChatMessageDto message) {
         System.out.println("Consumed message: " + message);
     }
 
     @KafkaListener(topics="chat-room-1", groupId = "2")
-    public void consume2(String message) {
+    public void consume2(ChatMessageDto message) {
         System.out.println("Consumed2 message: " + message);
     }
 }

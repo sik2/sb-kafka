@@ -4,6 +4,7 @@ import com.ll.sbkafka.domain.member.member.entity.Member;
 import com.ll.sbkafka.domain.post.author.entity.Author;
 import com.ll.sbkafka.domain.post.post.entity.Post;
 import com.ll.sbkafka.domain.post.post.repository.PostRepository;
+import com.ll.sbkafka.global.dto.chat.ChatMessageDto;
 import com.ll.sbkafka.global.event.PostCreatedEvent;
 import com.ll.sbkafka.global.rsData.RsData;
 import jakarta.persistence.EntityManager;
@@ -37,7 +38,7 @@ public class PostService {
         );
 
         eventPublisher.publishEvent(new PostCreatedEvent(this, post));
-        kafkaTemplate.send("chat-room-1", post.getId() + "번 글이 생성 되었습니다.");
+        kafkaTemplate.send("chat-room-1", new ChatMessageDto(post.getId() + "번 글이 등록 되었습니다."));
 
         return RsData.of(post);
     }
