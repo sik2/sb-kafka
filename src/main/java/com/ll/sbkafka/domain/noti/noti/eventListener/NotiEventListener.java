@@ -28,8 +28,9 @@ public class NotiEventListener {
         System.out.println("Consumed message: " + message);
     }
 
-    @KafkaListener(topics="chat-room-1", groupId = "2")
-    public void consume2(ChatMessageDto message) {
-        System.out.println("Consumed2 message: " + message);
+    @KafkaListener(topics="chat-room-1-dlt", groupId = "1")
+    public void consumeChatRoom1DLT(byte[] in) {
+        String message = new String(in);
+        System.out.println("Failed message: " + message);
     }
 }
